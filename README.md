@@ -53,6 +53,10 @@
 - **Thresholds:** The thresholds for warm, sunny, and windy conditions are defined in `app/config.py`.
 - **Weather Data File:** The path to the weather data CSV file is specified in `app/config.py`.
 
+## TODO
+
+Test for scalability. Use tools like `timeit` or `Locust` to make sure functions perform well under expected loads.
+
 ## License
 
 This project is licensed under the MIT License.
