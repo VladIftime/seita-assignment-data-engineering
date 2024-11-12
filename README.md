@@ -48,13 +48,6 @@
   - `now` (datetime): The current datetime.
 - **Response:** A dictionary with keys "warm", "sunny", and "windy" indicating whether the conditions are met for tomorrow based on predefined thresholds.
 
-## Testing
-
-1. **Run tests:**
-    ```sh
-    pytest
-    ```
-
 ## Configuration
 
 - **Thresholds:** The thresholds for warm, sunny, and windy conditions are defined in `app/config.py`.

@@ -34,16 +34,18 @@ def load_weather_data(filepath: str = WEATHER_DATA_FILEPATH) -> pd.DataFrame:
 
 def get_forecasts(df: pd.DataFrame, now: datetime, then: datetime) -> List[Dict]:
     """
-    Get the most recent forecasts for temperature, irradiance, and wind speed up to a given datetime.
+    Get the three most recent forecasts for temperature, irradiance, and wind speed.
 
     Parameters:
-    df (pd.DataFrame): DataFrame containing weather data.
-    now (datetime): The current datetime.
-    then (datetime): The datetime up to which forecasts are considered.
+        df (pd.DataFrame): DataFrame containing weather data.
+        now (datetime): The current datetime (must be UTC).
+        then (datetime): The datetime up to which forecasts are considered.
 
     Returns:
-    List[Dict]: A list containing a dictionary with the most recent forecasts for each sensor.
-    If no data is available for a sensor, the value is set to -1.0.
+        List[Dict[str, float]]: A list containing a dictionary with the most recent forecasts for each sensor.
+
+    Notes:
+        - If no data is available for a sensor, its value is set to -1.0.
     """
     # Ensure 'now' and 'then' are timezone-aware
     now = now if now.tzinfo else now.replace(tzinfo=timezone.utc)
@@ -89,16 +91,19 @@ def get_forecasts(df: pd.DataFrame, now: datetime, then: datetime) -> List[Dict]
 
 def evaluate_tomorrow(df: pd.DataFrame, now: datetime) -> dict:
     """
-    Evaluate weather conditions for tomorrow based on forecast data.
+    Determine if tomorrow's forecast meets conditions for 'warm', 'sunny', and 'windy'.
 
-    Args:
-        df (pd.DataFrame): DataFrame containing forecast data with columns
-                           "event_start" (datetime), "sensor" (str), and "event_value" (float).
-        now (datetime): Current datetime to calculate tomorrow's date.
+    Parameters:
+        df (pd.DataFrame): DataFrame containing forecast data.
+        now (datetime): The current datetime (must be UTC).
 
     Returns:
         dict: A dictionary with keys "warm", "sunny", and "windy" indicating whether
               the conditions are met for tomorrow based on predefined thresholds.
+
+    Notes:
+        - Thresholds are defined for each condition.
+        - Returns False if no data is available.
     """
     # Ensure 'now' is timezone-aware
     now = now if now.tzinfo else now.replace(tzinfo=timezone.utc)
